@@ -1,0 +1,34 @@
+version: "3"
+services:
+  annona_core:
+    image:  annona/annona_core
+    container_name: annona_core
+    restart: always
+    stdin_open: true
+    tty: true
+    build: .
+    #command: /app/annona_core -c=/app/conf/config.yaml
+    volumes:
+      - ./.env:/app/.env
+    environment:
+      - TZ=${TZ}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - SERVER_GIN_RUNMODE=${SERVER_GIN_RUNMODE}
+      - SERVER_PORT=${SERVER_PORT}
+      - SERVER_URL=${SERVER_URL}
+      - SERVER_DB_REDIS_ADDRESS=${SERVER_DB_REDIS_ADDRESS}
+      - SERVER_DB_TYPE=${SERVER_DB_TYPE}
+      - SERVER_DB_HOST=${SERVER_DB_HOST}
+      - SERVER_DB_PORT=${SERVER_DB_PORT}
+      - SERVER_DB_ADDRESS=${SERVER_DB_ADDRESS}
+      - SERVER_DB_USERNAME=${SERVER_DB_USERNAME}
+      - SERVER_DB_PASSWORD=${SERVER_DB_PASSWORD}
+      - SERVER_DB_NAME=${SERVER_DB_NAME}
+      - CORE_API_TOKEN=${CORE_API_TOKEN}
+      - BOT_MANAGER_ID=${BOT_MANAGER_ID}
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    # depends_on:
+    #   - db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
