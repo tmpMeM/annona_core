@@ -7,6 +7,7 @@ import (
 	"github.com/AnnonaOrg/annona_core/handler/blockword_handler"
 	"github.com/AnnonaOrg/annona_core/handler/card_handler"
 	"github.com/AnnonaOrg/annona_core/handler/keyword_handler"
+	"github.com/AnnonaOrg/annona_core/handler/keyword_history_handler"
 	"github.com/AnnonaOrg/annona_core/handler/redis_handler"
 	"github.com/AnnonaOrg/annona_core/handler/telebot_handler"
 	"github.com/AnnonaOrg/annona_core/handler/user_handler"
@@ -73,6 +74,12 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		apis.POST("/v1/keyword/item/delall", keyword_handler.DeleteAll)
 		// 列表
 		apis.POST("/v1/keyword/list", keyword_handler.List)
+
+		// Keyword History
+		// 创建
+		apis.POST("/v1/keyword_history/item/add", keyword_history_handler.Create)
+		// 列表
+		apis.POST("/v1/keyword_history/list", keyword_history_handler.List)
 
 		// blockword
 		// 创建

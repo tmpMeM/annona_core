@@ -1,9 +1,8 @@
 FROM golang:alpine3.18 as builder
+RUN apk add --no-cache --update git build-base
 
 WORKDIR /app
-
 COPY . .
-RUN apk add --no-cache --update git build-base
 RUN go build \
     -a \
     -trimpath \
