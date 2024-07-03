@@ -6,6 +6,7 @@ import (
 	"github.com/AnnonaOrg/annona_core/model/blockformsenderid_info"
 	"github.com/AnnonaOrg/annona_core/model/blockword_info"
 	"github.com/AnnonaOrg/annona_core/model/card_info"
+	"github.com/AnnonaOrg/annona_core/model/keyword_history_info"
 	"github.com/AnnonaOrg/annona_core/model/keyword_info"
 	"github.com/AnnonaOrg/annona_core/model/telebot_info"
 	"github.com/AnnonaOrg/annona_core/model/user_info"
@@ -20,6 +21,8 @@ func Init() {
 	blockword_info.Init()
 	blockformchatid_info.Init()
 	blockformsenderid_info.Init()
+
+	keyword_history_info.Init()
 
 	kvstore.Init()
 }
