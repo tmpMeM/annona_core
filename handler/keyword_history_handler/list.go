@@ -42,6 +42,9 @@ func List(c *gin.Context) {
 			handler.ListResponse{Items: list, Total: count},
 		)
 		// log.Debugf("GetList: %+v", list)
+		for k, v := range list {
+			log.Debugf("GetList: [%d] %+v", k, v)
+		}
 		return
 	}
 }

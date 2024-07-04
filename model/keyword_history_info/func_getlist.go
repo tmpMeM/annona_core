@@ -35,7 +35,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 			// 		Or("message_content_text LIKE ?", keyworldLike).
 			// 		Group("sender_id"),
 			// ).
-			Select("sender_id, count(1) as total").
+			Select("sender_id, count(*) as total").
 			Where("key_world LIKE ?", keyworldLike).
 			Or("message_content_text LIKE ?", keyworldLike).
 			Group("sender_id").
@@ -51,7 +51,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 			// 		Or("message_content_text LIKE ?", keyworldLike).
 			// 		Group("sender_id"),
 			// ).
-			Select("sender_id, count(1) as total").
+			Select("sender_id").
 			Where("key_world LIKE ?", keyworldLike).
 			Or("message_content_text LIKE ?", keyworldLike).
 			Group("sender_id").
