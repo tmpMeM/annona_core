@@ -28,7 +28,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 		keyworldLike := "%" + keyworld + "%"
 
 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("sender_id IN ?",
+			Where("sender_id IN (?)",
 				model.DB.Self.Model(&KeyworldHistoryInfo{}).
 					Select("sender_id").
 					Where("key_world LIKE ?", keyworldLike).
@@ -39,7 +39,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("sender_id IN ?",
+			Where("sender_id IN (?)",
 				model.DB.Self.Model(&KeyworldHistoryInfo{}).
 					Select("sender_id").
 					Where("key_world LIKE ?", keyworldLike).
