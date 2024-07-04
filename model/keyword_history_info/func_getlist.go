@@ -2,6 +2,7 @@ package keyword_history_info
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/AnnonaOrg/annona_core/model"
 )
@@ -21,16 +22,16 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 	}
 
 	list := make([]*KeyworldHistoryInfo, 0)
-
+	keyworld := strings.TrimSpace(u.KeyWorld)
 	switch {
-	case len(u.KeyWorld) > 0:
+	case len(keyworld) > 0:
 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("key_world = ?", u.KeyWorld).
+			Where("key_world = ?", keyworld).
 			Limit(size).Offset(offset).
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("key_world = ?", u.KeyWorld).
+			Where("key_world = ?", keyworld).
 			Count(&count)
 		return list, count, err
 
