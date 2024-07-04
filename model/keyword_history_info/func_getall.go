@@ -23,29 +23,3 @@ func GetAll() ([]*KeyworldHistoryInfo, int64, error) {
 	}
 	return list, 0, err
 }
-
-// func (u *KeyworldHistoryInfo) GetListBySenderID() ([]*KeyworldHistoryInfo, int64, error) {
-
-// 	list := make([]*KeyworldHistoryInfo, 0)
-
-// 	switch {
-
-// 	case u.SenderId != 0:
-// 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-// 			Select("sender_id", "count(tag) as total", "coalesce(max(stat), 0) as max_stat").
-// 			Where("tag IN ?", filterList).
-// 			//Or("tag LIKE ?", likeFilter).
-// 			Group("chat_id").
-// 			Where("sender_id = ?", u.SenderId).
-// 			Limit(size).Offset(offset).
-// 			Find(&list).
-// 			Error
-// 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
-// 			Where("sender_id = ?", u.SenderId).
-// 			Count(&count)
-// 		return list, count, err
-
-// 	default:
-// 		return nil, 0, fmt.Errorf("未找到符合条件的列表")
-// 	}
-// }

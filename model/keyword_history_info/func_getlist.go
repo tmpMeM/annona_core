@@ -26,35 +26,22 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 	switch {
 	case len(keyworld) > 0:
 		keyworldLike := "%" + keyworld + "%"
-
+		// beforeHour := time.Now().Add(-24 * 7 * time.Hour).Format("2006-01-02 15:04:05")
+		// Where("updated_at > ?", beforeHour).
 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			// Where("sender_id IN (?)",
-			// 	model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			// 		Select("sender_id").
-			// 		Where("key_world LIKE ?", keyworldLike).
-			// 		Or("message_content_text LIKE ?", keyworldLike).
-			// 		Group("sender_id"),
-			// ).
-			Select("sender_id, count(*) as total").
+			Select("sender_username, count(*) as total").
 			Where("key_world LIKE ?", keyworldLike).
 			Or("message_content_text LIKE ?", keyworldLike).
-			Group("sender_id").
+			Group("sender_username").
 			Limit(size).Offset(offset).
 			// Order("id DESC").
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			// Where("sender_id IN (?)",
-			// 	model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			// 		Select("sender_id").
-			// 		Where("key_world LIKE ?", keyworldLike).
-			// 		Or("message_content_text LIKE ?", keyworldLike).
-			// 		Group("sender_id"),
-			// ).
-			Select("sender_id").
+			Select("sender_username").
 			Where("key_world LIKE ?", keyworldLike).
 			Or("message_content_text LIKE ?", keyworldLike).
-			Group("sender_id").
+			Group("sender_username").
 			Count(&count)
 		return list, count, err
 
