@@ -41,7 +41,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 			Group("sender_id").
 			Group("message_link").
 			Limit(size).Offset(offset).
-			Order("id DESC").
+			// Order("id DESC").
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
