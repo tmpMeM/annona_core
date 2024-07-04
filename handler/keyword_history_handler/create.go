@@ -29,14 +29,14 @@ func Create(c *gin.Context) {
 		log.Errorf("ShouldBind: %v", err)
 		return
 	}
-	log.Debugf("ShouldBind: %+v", u)
+	// log.Debugf("ShouldBind: %+v", u)
 
 	if err := u.Create(); err != nil {
 		handler.SendResponse(c,
 			errno.ErrDatabase,
 			nil,
 		)
-		log.Errorf("信息添加失败: %v", err)
+		log.Errorf("信息(%+v)添加失败: %v", u, err)
 		return
 	}
 
