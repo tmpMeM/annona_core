@@ -38,6 +38,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 			Where("key_world LIKE ?", keyworldLike).
 			Or("message_content_text LIKE ?", keyworldLike).
 			Limit(size).Offset(offset).
+			Order("id DESC").
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
@@ -57,6 +58,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
 			Where("sender_id = ?", u.SenderId).
 			Limit(size).Offset(offset).
+			Order("id DESC").
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
