@@ -19,7 +19,7 @@ type KeyworldHistoryInfo struct {
 	// 核验请求id
 	ById string `json:"by_id" form:"by_id" gorm:"-"`
 
-	Page   int    `json:"-" form:"page" gorm:"-"`
-	Size   int    `json:"-" form:"size" gorm:"-"`
-	Filter string `json:"-" form:"filter" gorm:"-"`
+	Page   int    `json:"page" form:"page" gorm:"-"`
+	Size   int    `json:"size" form:"size" gorm:"-"`
+	Filter string `json:"filter" form:"filter" gorm:"-"`
 }
