@@ -25,13 +25,27 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 	keyworld := strings.TrimSpace(u.KeyWorld)
 	switch {
 	case len(keyworld) > 0:
+		keyworldLike := "%" + keyworld + "%"
+
 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("key_world = ?", keyworld).
+			Where("sender_id IN ?",
+				model.DB.Self.Model(&KeyworldHistoryInfo{}).
+					Select("sender_id").
+					Where("key_world LIKE ?", keyworldLike).
+					Or("message_content_text LIKE ?", keyworldLike).
+					Group("sender_id"),
+			).
 			Limit(size).Offset(offset).
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("key_world = ?", keyworld).
+			Where("sender_id IN ?",
+				model.DB.Self.Model(&KeyworldHistoryInfo{}).
+					Select("sender_id").
+					Where("key_world LIKE ?", keyworldLike).
+					Or("message_content_text LIKE ?", keyworldLike).
+					Group("sender_id"),
+			).
 			Count(&count)
 		return list, count, err
 
