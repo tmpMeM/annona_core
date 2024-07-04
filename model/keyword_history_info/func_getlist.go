@@ -28,24 +28,28 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 		keyworldLike := "%" + keyworld + "%"
 
 		err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("sender_id IN (?)",
-				model.DB.Self.Model(&KeyworldHistoryInfo{}).
-					Select("sender_id").
-					Where("key_world LIKE ?", keyworldLike).
-					Or("message_content_text LIKE ?", keyworldLike).
-					Group("sender_id"),
-			).
+			// Where("sender_id IN (?)",
+			// 	model.DB.Self.Model(&KeyworldHistoryInfo{}).
+			// 		Select("sender_id").
+			// 		Where("key_world LIKE ?", keyworldLike).
+			// 		Or("message_content_text LIKE ?", keyworldLike).
+			// 		Group("sender_id"),
+			// ).
+			Where("key_world LIKE ?", keyworldLike).
+			Or("message_content_text LIKE ?", keyworldLike).
 			Limit(size).Offset(offset).
 			Find(&list).
 			Error
 		model.DB.Self.Model(&KeyworldHistoryInfo{}).
-			Where("sender_id IN (?)",
-				model.DB.Self.Model(&KeyworldHistoryInfo{}).
-					Select("sender_id").
-					Where("key_world LIKE ?", keyworldLike).
-					Or("message_content_text LIKE ?", keyworldLike).
-					Group("sender_id"),
-			).
+			// Where("sender_id IN (?)",
+			// 	model.DB.Self.Model(&KeyworldHistoryInfo{}).
+			// 		Select("sender_id").
+			// 		Where("key_world LIKE ?", keyworldLike).
+			// 		Or("message_content_text LIKE ?", keyworldLike).
+			// 		Group("sender_id"),
+			// ).
+			Where("key_world LIKE ?", keyworldLike).
+			Or("message_content_text LIKE ?", keyworldLike).
 			Count(&count)
 		return list, count, err
 
