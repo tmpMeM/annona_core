@@ -41,6 +41,7 @@ func List(c *gin.Context) {
 			nil,
 			handler.ListResponse{Items: list, Total: count},
 		)
+		log.Debugf("GetList: %+v", list)
 		return
 	}
 }
