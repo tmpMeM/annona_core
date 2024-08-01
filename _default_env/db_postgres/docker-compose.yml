@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db_postgres:
+    image: postgres:15
+    container_name: db_postgres
+    restart: always
+    ports:
+      - ${SERVER_DB_PORT}:5432
+    environment:
+      - POSTGRES_USER=${SERVER_DB_USERNAME}
+      - POSTGRES_PASSWORD=${SERVER_DB_PASSWORD}
+      - POSTGRES_DB=${SERVER_DB_NAME}
+      - ALLOW_IP_RANGE=0.0.0.0/0
+    volumes:
+      - db_postgres_data:/var/lib/postgresql/data
+      - ./db_b:/db_b
+    healthcheck:
+      interval: 10s
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  db_postgres_data:

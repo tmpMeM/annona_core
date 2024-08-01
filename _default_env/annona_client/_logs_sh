@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker logs -f annona_client --tail 50
