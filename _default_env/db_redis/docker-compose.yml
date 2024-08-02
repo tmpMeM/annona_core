@@ -1,0 +1,14 @@
+version: "3"
+services:
+  db_redis:
+    image: redis
+    container_name: db_redis
+    restart: always
+    ports:
+      - "${SERVER_DB_PORT}:6379"
+    volumes:
+      - db_redis_data_v3:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  db_redis_data_v3:
