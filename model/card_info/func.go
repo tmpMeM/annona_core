@@ -2,6 +2,7 @@ package card_info
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/AnnonaOrg/annona_core/model"
 	"github.com/clin003/util"
@@ -74,12 +75,13 @@ func (r *CardInfo) Delete() error {
 }
 
 func (r *CardInfo) Update() error {
+	cardUUID := strings.TrimSpace(r.CardUUID)
 	switch {
-	case r.CardUUID != "":
+	case cardUUID != "":
 		return model.DB.Self.Model(&CardInfo{}).
 			Omit("card_uuid", "info_hash", "exp").
 			Select("stat").
-			Where("card_uuid = ?", r.CardUUID).
+			Where("card_uuid = ?", cardUUID).
 			Updates(&r).
 			Error
 	default:
@@ -88,6 +90,7 @@ func (r *CardInfo) Update() error {
 }
 
 func GetCardInfoByUUID(cardUUID string) (*CardInfo, error) {
+	cardUUID = strings.TrimSpace(cardUUID)
 	uu := &CardInfo{}
 	d := model.DB.Self.Model(&CardInfo{}).
 		Where("card_uuid = ?", cardUUID).
@@ -97,11 +100,12 @@ func GetCardInfoByUUID(cardUUID string) (*CardInfo, error) {
 
 // 通过 gid goods_id  获取相关信息
 func (u *CardInfo) Get() (*CardInfo, error) {
+	cardUUID := strings.TrimSpace(u.CardUUID)
 	uu := &CardInfo{}
 	switch {
-	case len(u.CardUUID) > 0:
+	case len(cardUUID) > 0:
 		d := model.DB.Self.Model(&CardInfo{}).
-			Where("card_uuid = ?", u.CardUUID).
+			Where("card_uuid = ?", cardUUID).
 			First(&uu)
 		return uu, d.Error
 	default:
