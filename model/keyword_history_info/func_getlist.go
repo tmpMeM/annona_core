@@ -24,7 +24,7 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 
 	list := make([]*KeyworldHistoryInfo, 0)
 	keyworld := strings.TrimSpace(u.KeyWorld)
-	beforeHour := time.Now().Add(-24 * 7 * time.Hour).Format("2006-01-02 15:04:05")
+	beforeHour := time.Now().Add(-24 * 3 * time.Hour).Format("2006-01-02 15:04:05")
 	switch {
 	case len(keyworld) > 0:
 		keyworldLike := "%" + keyworld + "%"
