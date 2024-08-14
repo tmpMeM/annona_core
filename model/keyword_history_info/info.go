@@ -23,4 +23,6 @@ type KeyworldHistoryInfo struct {
 	Page   int    `json:"page" form:"page" gorm:"-"`
 	Size   int    `json:"size" form:"size" gorm:"-"`
 	Filter string `json:"filter" form:"filter" gorm:"-"`
+
+	Note string `json:"note" form:"-" gorm:"-"`
 }
