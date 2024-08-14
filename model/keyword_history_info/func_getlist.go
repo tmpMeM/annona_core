@@ -107,7 +107,7 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 	for _, v := range list {
 		vc := v
 
-		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 8) + " " + vc.MessageLink + "\n"
+		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 30) + " " + vc.MessageLink + "\n"
 		if len(vc.MessageLink) == 0 {
 			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8)
 		} else {
