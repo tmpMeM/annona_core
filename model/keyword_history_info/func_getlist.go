@@ -107,20 +107,16 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 	for _, v := range list {
 		vc := v
 
-		// vc.Note = utils.GetStringRuneN(vc.MessageContentText, 8) +
-		// 	// " " + sendUsername +
-		// 	" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
 		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 8) + " " + vc.MessageLink + "\n"
 		if len(vc.MessageLink) == 0 {
 			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8)
 		} else {
 			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8) +
-				// " " + sendUsername +
 				" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
 		}
 		if _, isAdd := listMap[vc.SenderId]; isAdd {
 			vcM := listMap[vc.SenderId]
-			// text := vcM.Note + vc.Note
+
 			vcM.Note = vcM.Note + vc.Note
 			vcM.NoteHtml = vcM.NoteHtml + vc.NoteHtml
 			listMap[vc.SenderId] = vcM
@@ -131,11 +127,6 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 	}
 	newList := make([]*KeyworldHistoryInfo, 0)
 	for _, v := range listSender {
-		// vcM := listMap[v]
-		// sendUsername := ""
-		// if len(vcM.SenderUsername) > 0 {
-		// 	sendUsername = "@" + vcM.SenderUsername
-		// }
 		newList = append(newList, listMap[v])
 	}
 
