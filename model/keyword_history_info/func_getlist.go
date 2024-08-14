@@ -109,9 +109,9 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 
 		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 30) + " " + vc.MessageLink + "\n"
 		if len(vc.MessageLink) == 0 {
-			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8)
+			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 18)
 		} else {
-			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8) +
+			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 18) +
 				" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
 		}
 		if _, isAdd := listMap[vc.SenderId]; isAdd {
