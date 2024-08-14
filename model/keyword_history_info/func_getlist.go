@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/AnnonaOrg/annona_core/internal/utils"
-
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
@@ -107,8 +106,13 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 	listMap := make(map[int64]*KeyworldHistoryInfo, 0)
 	for _, v := range list {
 		vc := v
+		sendUsername := ""
+		if len(vc.SenderUsername) > 0 {
+			sendUsername = "@" + vc.SenderUsername
+		}
 		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 10) +
-			"<a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
+			" " + sendUsername +
+			" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
 		if _, isAdd := listMap[vc.SenderId]; isAdd {
 			vcM := listMap[vc.SenderId]
 			text := vcM.Note + vc.Note
