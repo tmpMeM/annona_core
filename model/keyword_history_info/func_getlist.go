@@ -106,17 +106,23 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 	listMap := make(map[int64]*KeyworldHistoryInfo, 0)
 	for _, v := range list {
 		vc := v
-		// sendUsername := ""
-		// if len(vc.SenderUsername) > 0 {
-		// 	sendUsername = "@" + vc.SenderUsername
-		// }
-		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 8) +
-			// " " + sendUsername +
-			" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
+
+		// vc.Note = utils.GetStringRuneN(vc.MessageContentText, 8) +
+		// 	// " " + sendUsername +
+		// 	" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
+		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 8) + " " + vc.MessageLink + "\n"
+		if len(vc.MessageLink) == 0 {
+			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8)
+		} else {
+			vc.NoteHtml = utils.GetStringRuneN(vc.MessageContentText, 8) +
+				// " " + sendUsername +
+				" <a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
+		}
 		if _, isAdd := listMap[vc.SenderId]; isAdd {
 			vcM := listMap[vc.SenderId]
-			text := vcM.Note + vc.Note
-			vcM.Note = text
+			// text := vcM.Note + vc.Note
+			vcM.Note = vcM.Note + vc.Note
+			vcM.NoteHtml = vcM.NoteHtml + vc.NoteHtml
 			listMap[vc.SenderId] = vcM
 		} else {
 			listMap[vc.SenderId] = vc
