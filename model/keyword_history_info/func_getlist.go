@@ -5,6 +5,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AnnonaOrg/annona_core/internal/utils"
+
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
@@ -27,7 +29,8 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 	beforeHour := time.Now().Add(-24 * time.Hour).Format("2006-01-02 15:04:05")
 	switch {
 	case len(keyworld) > 0:
-		return u.GetListByKeyworld()
+		// return u.GetListByKeyworld()
+		return u.GetListByKeyworldEx()
 		// keyworldLike := "%" + keyworld + "%"
 		// // Where("updated_at > ?", beforeHour).
 		// err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
@@ -70,9 +73,11 @@ func (u *KeyworldHistoryInfo) GetListByKeyworld() ([]*KeyworldHistoryInfo, int64
 	list := make([]*KeyworldHistoryInfo, 0)
 	keyworld := strings.TrimSpace(u.KeyWorld)
 	beforeHour := time.Now().Add(-24 * time.Hour).Format("2006-01-02 15:04:05")
+	if len(keyworld) == 0 {
+		return nil, 0, fmt.Errorf("keyworld is NULL")
+	}
 
 	keyworldLike := "%" + keyworld + "%"
-
 	// Where("updated_at > ?", beforeHour).
 	err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
 		// Select("sender_username, count(*) as total").
@@ -90,4 +95,35 @@ func (u *KeyworldHistoryInfo) GetListByKeyworld() ([]*KeyworldHistoryInfo, int64
 		// Group("sender_username").
 		Count(&count)
 	return list, count, err
+}
+
+func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int64, error) {
+	list, _, err := u.GetListByKeyworld()
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var listSender []int64
+	listMap := make(map[int64]*KeyworldHistoryInfo, 0)
+	for _, v := range list {
+		vc := v
+		vc.Note = utils.GetStringRuneN(vc.MessageContentText, 10) +
+			"<a href=\"" + vc.MessageLink + "\">来源</a>" + "\n"
+		if _, isAdd := listMap[vc.SenderId]; isAdd {
+			vcM := listMap[vc.SenderId]
+			text := vcM.Note + vc.Note
+			vcM.Note = text
+			listMap[vc.SenderId] = vcM
+		} else {
+			listMap[vc.SenderId] = vc
+			listSender = append(listSender, vc.SenderId)
+		}
+	}
+	newList := make([]*KeyworldHistoryInfo, 0)
+	for _, v := range listSender {
+
+		newList = append(newList, listMap[v])
+	}
+
+	return newList, int64(len(newList)), nil
 }
