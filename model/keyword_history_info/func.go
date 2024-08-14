@@ -18,6 +18,6 @@ func DeleteKeyworldHistoryInfoBeforeOneDay() error {
 	beforeHour := time.Now().Add(-24 * time.Hour).Format("2006-01-02 15:04:05")
 	return model.DB.Self.Unscoped().
 		Where("updated_at < ?", beforeHour).
-		Delete(&KeyworldInfo{}).
+		Delete(&KeyworldHistoryInfo{}).
 		Error
 }
