@@ -41,10 +41,11 @@ func List(c *gin.Context) {
 			nil,
 			handler.ListResponse{Items: list, Total: count},
 		)
-		// // log.Debugf("GetList: %+v", list)
-		// for k, v := range list {
-		// 	log.Debugf("GetList: [%d] %+v", k, v)
-		// }
+		go func() {
+			if err := model.DeleteKeyworldHistoryInfoBeforeOneDay(); err != nil {
+				log.Errorf("DeleteKeyworldHistoryInfoBeforeOneDay(): %v", err)
+			}
+		}()
 		return
 	}
 }
