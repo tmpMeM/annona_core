@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rm ./cmd/annona_core/annona_core
+
+#docker build -t annona/annona_core:beta .   &&  docker push annona/annona_core:beta
+docker build -t annona_core:localhost .
+#docker image ls
