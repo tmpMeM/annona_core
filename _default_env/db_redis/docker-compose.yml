@@ -3,6 +3,7 @@ services:
   db_redis:
     image: redis
     container_name: db_redis
+    command: redis-server --requirepass ${SERVER_DB_PASSWORD}
     restart: always
     ports:
       - "${SERVER_DB_PORT}:6379"
