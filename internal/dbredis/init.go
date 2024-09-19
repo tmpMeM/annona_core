@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/AnnonaOrg/annona_core/internal/repository"
-
 	"github.com/AnnonaOrg/osenv"
 	"github.com/redis/go-redis/v9"
 )
@@ -17,6 +16,9 @@ var (
 func GetRedisOptions() Options {
 	options := DefaultOptions
 	options.Address = osenv.GetServerDbRedisAddress()
+	if pw := osenv.GetServerDbRedisPassword(); len(pw) > 0 {
+		options.Password = pw
+	}
 	return options
 }
 

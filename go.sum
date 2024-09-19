@@ -4,6 +4,8 @@ github.com/AnnonaOrg/osenv v0.0.14 h1:9sJYgqaRmE3URV43lrBwRAcMQPZ/QO+uYd6nx5+hpU
 github.com/AnnonaOrg/osenv v0.0.14/go.mod h1:hSb+aV9uIs8sLAYLBAxELKmeFc/50iFo78lVYEJi7q4=
 github.com/AnnonaOrg/osenv v0.0.15 h1:q59PnsTYYLPGwN4TChLINHisnc9YavQq4aGNZkj+6fU=
 github.com/AnnonaOrg/osenv v0.0.15/go.mod h1:hSb+aV9uIs8sLAYLBAxELKmeFc/50iFo78lVYEJi7q4=
+github.com/AnnonaOrg/osenv v0.1.15 h1:zuUzmBnzrGtof87uRooUNFGqBSBCdL/FWGAQxtWia4I=
+github.com/AnnonaOrg/osenv v0.1.15/go.mod h1:s7SfWcnwh1NBcHGVK8xFR1DcySlHEf5Ya0dOnLsn2Zk=
 github.com/AnnonaOrg/pkg/errno v0.0.0-20240115151035-742c04e4feef h1:NlHe4R25TUq6dVoOd2ABXe8KgBMKis16ZKePRM+kqo4=
 github.com/AnnonaOrg/pkg/errno v0.0.0-20240115151035-742c04e4feef/go.mod h1:avk1UN/7g6sDC7gaqiDTQReD8pH7//5BXXbHv+i+FLw=
 github.com/AnnonaOrg/pkg/godotenv v0.0.0-20240115173726-fec050db8b19 h1:bw5LuLNKza+hl9qn3ao9McVRlQe1NJa9MjmzNwL1P2s=
