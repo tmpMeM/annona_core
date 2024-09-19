@@ -4,7 +4,7 @@ go 1.21.5
 
 require (
 	github.com/AnnonaOrg/gokv v0.0.2
-	github.com/AnnonaOrg/osenv v0.0.15
+	github.com/AnnonaOrg/osenv v0.1.15
 	github.com/AnnonaOrg/pkg/errno v0.0.0-20240115151035-742c04e4feef
 	github.com/AnnonaOrg/pkg/token v0.0.0-20240115152432-c485e8a9a0ce
 	github.com/clin003/util v0.3.1
