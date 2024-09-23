@@ -1,4 +1,4 @@
-FROM golang:alpine3.18 as builder
+FROM golang:alpine3.18 AS builder
 RUN apk add --no-cache --update git build-base
 
 WORKDIR /app
@@ -11,11 +11,11 @@ RUN go build \
     "./cmd/annona_core" && \
     ls -lah
 
-FROM alpine:3.18 as runner
+FROM alpine:3.18 AS runner
 RUN apk --no-cache add ca-certificates tzdata
-ENV LANG C.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL C.UTF-8
+#ENV LANG C.UTF-8
+#ENV LANGUAGE en_US:en
+#ENV LC_ALL C.UTF-8
 ENV TZ UTC
 WORKDIR /app
 
