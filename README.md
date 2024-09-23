@@ -33,7 +33,12 @@ Telegram 群聊关键词提醒
 annonaOrg 频道: https://t.me/annonaOrg 
 annonaOrg 交流群: https://t.me/annonaChat
 
-## 打赏
+
+# 有问题反馈
+在使用中有任何问题，欢迎反馈
+开发机器人频道: [@umfaka](https://t.me/umfaka)
+
+# 打赏
 如果该项目对您有所帮助，希望可以请我喝一杯咖啡☕️
 Usdt(trc20)打赏地址: 
 ```
