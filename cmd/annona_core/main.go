@@ -75,10 +75,7 @@ func main() {
 	defer dbredis.Close()
 
 	// Set gin mode.
-	ginMode := osenv.GetServerGinRunode()
-	if ginMode == "" {
-		ginMode = "release"
-	}
+	ginMode := osenv.GetServerGinRunmode()
 	gin.SetMode(ginMode)
 	//Create the Gin engine.
 	g := gin.New()
