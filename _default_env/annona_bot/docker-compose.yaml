@@ -1,0 +1,30 @@
+version: "3"
+services:
+  annona_bot:
+    image:  annona/annona_bot:latest
+    container_name: annona_bot
+    restart: always
+    #build: .
+    volumes:
+      - ./.env:/app/.env
+    environment:
+      #- TZ=${TZ}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - SERVER_GIN_RUNMODE=${SERVER_GIN_RUNMODE}
+      - SERVER_PORT=${SERVER_PORT}
+      - SERVER_URL=${SERVER_URL}
+      - BOT_MANAGER_ID=${BOT_MANAGER_ID}
+      - BOT_TELEGRAM_TOKEN=${BOT_TELEGRAM_TOKEN}
+      - BOT_TELEGRAM_WEBHOOK_URL=${BOT_TELEGRAM_WEBHOOK_URL}
+      - BOT_TELEGRAM_API_PROXY_URL=${BOT_TELEGRAM_API_PROXY_URL}
+      - BOT_REPORT_CHAT_ID=${BOT_REPORT_CHAT_ID}
+      - CORE_API_TOKEN=${CORE_API_TOKEN}
+      - CORE_API_URL=${CORE_API_URL}
+      - BUTTON_LINK_Cardbot=${BUTTON_LINK_Cardbot}
+      - BUTTON_LINK_SubmitNewGroup=${BUTTON_LINK_SubmitNewGroup}
+      - PLATFORM_TYPE_TELE=${PLATFORM_TYPE_TELE}
+      - RETRY_PUSH_MSG_ENABLE=${RETRY_PUSH_MSG_ENABLE}
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
