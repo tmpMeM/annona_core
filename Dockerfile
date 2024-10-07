@@ -16,14 +16,14 @@ RUN apk --no-cache add ca-certificates tzdata
 #ENV LANG C.UTF-8
 #ENV LANGUAGE en_US:en
 #ENV LC_ALL C.UTF-8
-ENV TZ UTC
+#ENV TZ=UTC
 WORKDIR /app
 
 COPY --from=builder /app/annona_core .
 VOLUME /app/conf
 VOLUME /app/autocert
 VOLUME /app/log
-EXPOSE 8080
+#EXPOSE 8080
 
 #ENTRYPOINT ["./annona_core" ,"-c","/app/conf/config.yaml"]
 ENTRYPOINT ["./annona_core"]

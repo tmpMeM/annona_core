@@ -43,7 +43,7 @@ func LoadAllUser(isClearAll bool) {
 
 	for _, v := range allUser {
 		user := v
-		LoadUser(user, isClearAll)
+		LoadUser(&user, isClearAll)
 	}
 }
 
