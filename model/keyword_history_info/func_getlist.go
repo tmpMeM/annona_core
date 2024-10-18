@@ -9,8 +9,8 @@ import (
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
-func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
-	list := make([]*KeyworldHistoryInfo, 0)
+func (u *KeyworldHistoryInfo) GetList() ([]KeyworldHistoryInfo, int64, error) {
+	list := make([]KeyworldHistoryInfo, 0)
 	// var count int64
 	var err error
 	keyworld := strings.TrimSpace(u.KeyWorld)
@@ -34,10 +34,10 @@ func (u *KeyworldHistoryInfo) GetList() ([]*KeyworldHistoryInfo, int64, error) {
 	return GetKeyworldHistoryInfoWithContentJoinToNote(list)
 }
 
-func (u *KeyworldHistoryInfo) GetListByKeyworld() ([]*KeyworldHistoryInfo, int64, error) {
+func (u *KeyworldHistoryInfo) GetListByKeyworld() ([]KeyworldHistoryInfo, int64, error) {
 	var count int64
 
-	list := make([]*KeyworldHistoryInfo, 0)
+	list := make([]KeyworldHistoryInfo, 0)
 	keyworld := strings.TrimSpace(u.KeyWorld)
 	beforeHour := time.Now().Add(-24 * time.Hour).Format("2006-01-02 15:04:05")
 	if len(keyworld) == 0 {
@@ -45,34 +45,27 @@ func (u *KeyworldHistoryInfo) GetListByKeyworld() ([]*KeyworldHistoryInfo, int64
 	}
 
 	keyworldLike := "%" + keyworld + "%"
-	// Where("updated_at > ?", beforeHour).
+
 	err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
-		// Select("sender_username, count(*) as total").
 		Where("key_world LIKE ? AND updated_at > ?", keyworldLike, beforeHour).
-		// Or("message_content_text LIKE ? AND updated_at > ?", keyworldLike, beforeHour).
-		// Group("sender_username").
-		// Limit(size).Offset(offset).
 		Order("id DESC").
 		Find(&list).
 		Error
 	model.DB.Self.Model(&KeyworldHistoryInfo{}).
-		// Select("sender_username").
 		Where("key_world LIKE ? AND updated_at > ?", keyworldLike, beforeHour).
-		// Or("message_content_text LIKE ? AND updated_at > ?", keyworldLike, beforeHour).
-		// Group("sender_username").
 		Count(&count)
 	return list, count, err
 }
 
 // xxx
-func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int64, error) {
+func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]KeyworldHistoryInfo, int64, error) {
 	list, _, err := u.GetListByKeyworld()
 	if err != nil {
 		return nil, 0, err
 	}
 
 	var listSender []int64
-	listMap := make(map[int64]*KeyworldHistoryInfo, 0)
+	listMap := make(map[int64]KeyworldHistoryInfo, 0)
 	for _, v := range list {
 		vc := v
 
@@ -94,7 +87,7 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 			listSender = append(listSender, vc.SenderId)
 		}
 	}
-	newList := make([]*KeyworldHistoryInfo, 0)
+	newList := make([]KeyworldHistoryInfo, 0)
 	for _, v := range listSender {
 		newList = append(newList, listMap[v])
 	}
@@ -102,7 +95,7 @@ func (u *KeyworldHistoryInfo) GetListByKeyworldEx() ([]*KeyworldHistoryInfo, int
 	return newList, int64(len(newList)), nil
 }
 
-func (u *KeyworldHistoryInfo) GetListBySenderID() ([]*KeyworldHistoryInfo, int64, error) {
+func (u *KeyworldHistoryInfo) GetListBySenderID() ([]KeyworldHistoryInfo, int64, error) {
 	var count int64
 	if u.Size <= 0 || u.Size > 100 {
 		u.Size = 100
@@ -116,7 +109,7 @@ func (u *KeyworldHistoryInfo) GetListBySenderID() ([]*KeyworldHistoryInfo, int64
 		offset = offset * u.Size
 	}
 
-	list := make([]*KeyworldHistoryInfo, 0)
+	list := make([]KeyworldHistoryInfo, 0)
 	beforeHour := time.Now().Add(-24 * time.Hour).Format("2006-01-02 15:04:05")
 
 	err := model.DB.Self.Model(&KeyworldHistoryInfo{}).
@@ -132,7 +125,7 @@ func (u *KeyworldHistoryInfo) GetListBySenderID() ([]*KeyworldHistoryInfo, int64
 }
 
 // xxx
-func (u *KeyworldHistoryInfo) GetListBySenderIDEx() ([]*KeyworldHistoryInfo, int64, error) {
+func (u *KeyworldHistoryInfo) GetListBySenderIDEx() ([]KeyworldHistoryInfo, int64, error) {
 	list, _, err := u.GetListBySenderID()
 	if err != nil {
 		return nil, 0, err
@@ -140,7 +133,7 @@ func (u *KeyworldHistoryInfo) GetListBySenderIDEx() ([]*KeyworldHistoryInfo, int
 
 	// retList := make([]*KeyworldHistoryInfo, 0)
 	var listSender []int64
-	listMap := make(map[int64]*KeyworldHistoryInfo, 0)
+	listMap := make(map[int64]KeyworldHistoryInfo, 0)
 	for _, v := range list {
 		vc := v
 
@@ -163,7 +156,7 @@ func (u *KeyworldHistoryInfo) GetListBySenderIDEx() ([]*KeyworldHistoryInfo, int
 			listSender = append(listSender, vc.SenderId)
 		}
 	}
-	newList := make([]*KeyworldHistoryInfo, 0)
+	newList := make([]KeyworldHistoryInfo, 0)
 	for _, v := range listSender {
 		newList = append(newList, listMap[v])
 	}
@@ -172,9 +165,9 @@ func (u *KeyworldHistoryInfo) GetListBySenderIDEx() ([]*KeyworldHistoryInfo, int
 }
 
 // 将 KeyworldHistoryInfo 中的 ContentText 拼接到 Note中
-func GetKeyworldHistoryInfoWithContentJoinToNote(list []*KeyworldHistoryInfo) ([]*KeyworldHistoryInfo, int64, error) {
+func GetKeyworldHistoryInfoWithContentJoinToNote(list []KeyworldHistoryInfo) ([]KeyworldHistoryInfo, int64, error) {
 	var listSender []int64
-	listMap := make(map[int64]*KeyworldHistoryInfo, 0)
+	listMap := make(map[int64]KeyworldHistoryInfo, 0)
 	for _, v := range list {
 		vc := v
 
@@ -197,7 +190,7 @@ func GetKeyworldHistoryInfoWithContentJoinToNote(list []*KeyworldHistoryInfo) ([
 			listSender = append(listSender, vc.SenderId)
 		}
 	}
-	newList := make([]*KeyworldHistoryInfo, 0)
+	newList := make([]KeyworldHistoryInfo, 0)
 	for _, v := range listSender {
 		newList = append(newList, listMap[v])
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
-func (u *BlockformsenderidInfo) GetList() ([]*BlockformsenderidInfo, int64, error) {
+func (u *BlockformsenderidInfo) GetList() ([]BlockformsenderidInfo, int64, error) {
 	var count int64
 	if u.Size <= 0 || u.Size > 100 {
 		u.Size = 100
@@ -20,7 +20,7 @@ func (u *BlockformsenderidInfo) GetList() ([]*BlockformsenderidInfo, int64, erro
 		offset = offset * u.Size
 	}
 
-	list := make([]*BlockformsenderidInfo, 0)
+	list := make([]BlockformsenderidInfo, 0)
 
 	switch {
 	case len(u.ById) > 0:

@@ -6,24 +6,14 @@ import (
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
-func GetAll() ([]*BlockworldInfo, int64, error) {
-	var err error
-	list := make([]*BlockworldInfo, 0)
-	rows, err := model.DB.Self.Model(&BlockworldInfo{}).Rows()
-	defer rows.Close()
-	for rows.Next() {
-		var item BlockworldInfo
-		if err1 := model.DB.Self.ScanRows(rows, &item); err1 != nil {
-			err = err1
-			continue
-		} else {
-			list = append(list, &item)
-		}
+func GetAll() ([]BlockworldInfo, int64, error) {
+
+	list := make([]BlockworldInfo, 0)
+
+	if err := model.DB.Self.Model(&BlockworldInfo{}).Find(&list).Error; err != nil {
+		return nil, 0, err
 	}
-	if len(list) > 0 {
-		return list, int64(len(list)), nil
-	}
-	return list, 0, err
+	return list, int64(len(list)), nil
 }
 
 func GetAllByOwnerInfoHash(ownerInfoHash string) ([]BlockworldInfo, int64, error) {
