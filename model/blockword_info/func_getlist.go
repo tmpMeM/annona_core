@@ -6,7 +6,7 @@ import (
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
-func (u *BlockworldInfo) GetList() ([]*BlockworldInfo, int64, error) {
+func (u *BlockworldInfo) GetList() ([]BlockworldInfo, int64, error) {
 	var count int64
 	if u.Size <= 0 || u.Size > 100 {
 		u.Size = 100
@@ -20,7 +20,7 @@ func (u *BlockworldInfo) GetList() ([]*BlockworldInfo, int64, error) {
 		offset = offset * u.Size
 	}
 
-	list := make([]*BlockworldInfo, 0)
+	list := make([]BlockworldInfo, 0)
 
 	switch {
 	case len(u.ById) > 0:

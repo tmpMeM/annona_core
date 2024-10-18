@@ -6,7 +6,7 @@ import (
 	"github.com/AnnonaOrg/annona_core/model"
 )
 
-func (u *BlockformchatidInfo) GetList() ([]*BlockformchatidInfo, int64, error) {
+func (u *BlockformchatidInfo) GetList() ([]BlockformchatidInfo, int64, error) {
 	var count int64
 	if u.Size <= 0 || u.Size > 100 {
 		u.Size = 100
@@ -20,7 +20,7 @@ func (u *BlockformchatidInfo) GetList() ([]*BlockformchatidInfo, int64, error) {
 		offset = offset * u.Size
 	}
 
-	list := make([]*BlockformchatidInfo, 0)
+	list := make([]BlockformchatidInfo, 0)
 
 	switch {
 	case len(u.ById) > 0:
