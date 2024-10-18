@@ -56,7 +56,7 @@ func LoadAllBot() {
 	}
 	for _, v := range allBot {
 		bot := v
-		LoadBot(bot)
+		LoadBot(&bot)
 	}
 
 }
