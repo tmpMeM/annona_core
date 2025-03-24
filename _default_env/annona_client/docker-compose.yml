@@ -30,6 +30,8 @@ services:
       - CORE_API_TOKEN=${CORE_API_TOKEN}
       - CORE_API_URL=${CORE_API_URL}
       - TDLIB_SIMPLE_MESSAGE_ENABLE=${TDLIB_SIMPLE_MESSAGE_ENABLE}
+      - BLOCK_LONG_TEXT_ENABLE=${BLOCK_LONG_TEXT_ENABLE}
+      - BLOCK_LONG_TEXT_MAX_COUNT=${BLOCK_LONG_TEXT_MAX_COUNT}
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
